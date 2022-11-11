@@ -81,5 +81,29 @@ btraiz=Button(tablero, width=5, height=1 ,text="√")
 btraiz.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
 btraiz.grid(row=3, column=4)
 
+btrporcentaje=Button(tablero, width=5, height=1 ,text="%")
+btrporcentaje.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
+btrporcentaje.grid(row=3, column=5)
+
+btdivi=Button(tablero, width=5, height=1 ,text="÷")
+btdivi.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
+btdivi.grid(row=3, column=6)
+
+btmulti=Button(tablero, width=5, height=1 ,text="x")
+btmulti.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
+btmulti.grid(row=4, column=4)
+
+btsuma=Button(tablero, width=5, height=1 ,text="+")
+btsuma.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
+btsuma.grid(row=4, column=5)
+
+btresta=Button(tablero, width=5, height=1 ,text="-")
+btresta.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
+btresta.grid(row=4, column=5)
+
+btsigno=Button(tablero, width=5, height=1 ,text="±")
+btsigno.config(bg="black", fg="#12ED3E",font=("Ink Free",20))
+btsigno.grid(row=4, column=6)
+
 
 ventana.mainloop()
