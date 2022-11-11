@@ -2,7 +2,7 @@ from tkinter import *
 
 ventana=Tk()
 
-ventana.title("Steel Calculator")
+ventana.title("Steel Learning")
 ventana.iconbitmap("Imagenes/IconCal.ico")
 ventana.config(bg="black")
 
