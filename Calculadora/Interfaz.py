@@ -37,7 +37,7 @@ texto.grid(row=0,column=1, padx=10, pady=10)
 Label(miFrame, text="Ingrese 2: ",bg="black", fg="white").grid(row=1,column=0, sticky="w", padx=10, pady=10) #alinear mediante filas y colomnnas
 Entry(miFrame, justify="center").grid(row=1,column=1, padx=10, pady=10)
 
-minombre=IntVar()
+minombre=StringVar()
 
 Label(miFrame, text="Nombre:",bg="black", fg="white").grid(row=2,column=0, sticky="w", padx=10, pady=10) #(grid)alinear mediante filas y colomnnas
 Entry(miFrame, textvariable=minombre).grid(row=2,column=1, padx=10, pady=10)
