@@ -81,11 +81,11 @@ btpotencia=Button(tablero, width=5, height=1 ,text="x²", command=lambda:fc.digi
 btpotencia.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btpotencia.grid(row=2, column=5, padx=5 , pady=5)
 
-btpotenciay=Button(tablero, width=5, height=1 ,text="xʸ", command=lambda:fc.digitar(textoDisplay,"ˆ["))
+btpotenciay=Button(tablero, width=5, height=1 ,text="xʸ", command=lambda:fc.digitar(textoDisplay,"ˆ"))
 btpotenciay.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btpotenciay.grid(row=2, column=6, padx=5 , pady=5)
 
-btraiz=Button(tablero, width=5, height=1 ,text="√", command=lambda:fc.digitar(textoDisplay,"√["))
+btraiz=Button(tablero, width=5, height=1 ,text="√", command=lambda:fc.digitar(textoDisplay,"√"))
 btraiz.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btraiz.grid(row=3, column=4, padx=5 , pady=5)
 
@@ -97,7 +97,7 @@ btdivi=Button(tablero, width=5, height=1 ,text="÷", command=lambda:fc.digitar(t
 btdivi.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btdivi.grid(row=3, column=6, padx=5 , pady=5)
 
-btmulti=Button(tablero, width=5, height=1 ,text="x", command=lambda:fc.digitar(textoDisplay,"*"))
+btmulti=Button(tablero, width=5, height=1 ,text="x", command=lambda:fc.digitar(textoDisplay,"x"))
 btmulti.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btmulti.grid(row=4, column=4, padx=5 , pady=5)
 
@@ -121,15 +121,15 @@ btfact=Button(tablero, width=5, height=1 ,text="n!", command=lambda:fc.digitar(t
 btfact.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btfact.grid(row=5, column=6, padx=5 , pady=5)
 
-btlog=Button(tablero, width=5, height=1 ,text="log", command=lambda:fc.digitar(textoDisplay,"log["))
+btlog=Button(tablero, width=5, height=1 ,text="log", command=lambda:fc.digitar(textoDisplay,"log"))
 btlog.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btlog.grid(row=6, column=4, padx=5 , pady=5)
 
-btln=Button(tablero, width=5, height=1 ,text="ln", command=lambda:fc.digitar(textoDisplay,"ln["))
+btln=Button(tablero, width=5, height=1 ,text="ln", command=lambda:fc.digitar(textoDisplay,"ln"))
 btln.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btln.grid(row=6, column=5, padx=5 , pady=5)
 
-btigual=Button(tablero, width=5, height=1 ,text="=", command=lambda:fc.buscarOp(textoDisplay))
+btigual=Button(tablero, width=5, height=1 ,text="=", command=lambda:fc.operar(textoDisplay))
 btigual.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btigual.grid(row=6, column=6, padx=5 , pady=5)
 
@@ -141,7 +141,7 @@ btparend=Button(tablero, width=10, height=1 ,text=")", command=lambda:fc.digitar
 btparend.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btparend.grid(row=6, column=2, padx=5 , pady=5)
 
-btexp=Button(tablero, width=10, height=1 ,text="exp", command=lambda:fc.digitar(textoDisplay,"exp["))
+btexp=Button(tablero, width=10, height=1 ,text="exp", command=lambda:fc.digitar(textoDisplay,"exp"))
 btexp.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btexp.grid(row=6, column=3, padx=5 , pady=5)
 
