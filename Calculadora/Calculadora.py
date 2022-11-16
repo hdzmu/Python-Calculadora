@@ -6,6 +6,7 @@ ventana=Tk()
 ventana.title("Steel Learning")
 ventana.iconbitmap("Imagenes/IconCal.ico")
 ventana.config(bg="black")
+ventana.resizable(0,0)
 
 tablero=Frame(ventana, bg="black")
 tablero.pack()
@@ -85,7 +86,7 @@ btpotenciay=Button(tablero, width=5, height=1 ,text="xʸ", command=lambda:fc.dig
 btpotenciay.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btpotenciay.grid(row=2, column=6, padx=5 , pady=5)
 
-btraiz=Button(tablero, width=5, height=1 ,text="√", command=lambda:fc.digitar(textoDisplay,"√"))
+btraiz=Button(tablero, width=5, height=1 ,text="√", command=lambda:fc.digitar(textoDisplay,"√("))
 btraiz.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btraiz.grid(row=3, column=4, padx=5 , pady=5)
 
@@ -129,7 +130,7 @@ btln=Button(tablero, width=5, height=1 ,text="ln", command=lambda:fc.digitar(tex
 btln.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btln.grid(row=6, column=5, padx=5 , pady=5)
 
-btigual=Button(tablero, width=5, height=1 ,text="=", command=lambda:fc.operar(textoDisplay))
+btigual=Button(tablero, width=5, height=1 ,text="=", command=lambda:fc.convertir(textoDisplay))
 btigual.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btigual.grid(row=6, column=6, padx=5 , pady=5)
 
