@@ -24,7 +24,6 @@ def operacionEspecial(funcion,operacion):
         if(copiar==True):
             new+=i
     new+="**(1/2)"
-    print(len(new))
     return new
 
 def convertir(display):

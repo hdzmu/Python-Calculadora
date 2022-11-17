@@ -142,7 +142,7 @@ btparend=Button(tablero, width=10, height=1 ,text=")", command=lambda:fc.digitar
 btparend.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btparend.grid(row=6, column=2, padx=5 , pady=5)
 
-btexp=Button(tablero, width=10, height=1 ,text="exp", command=lambda:fc.digitar(textoDisplay,"exp"))
+btexp=Button(tablero, width=10, height=1 ,text="10˟", command=lambda:fc.digitar(textoDisplay,"x10ˆ"))
 btexp.config(bg="black", fg="#12ED3E",font=(fuente,20))
 btexp.grid(row=6, column=3, padx=5 , pady=5)
 
