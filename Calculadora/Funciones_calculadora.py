@@ -39,6 +39,7 @@ def operacionEspecial(funcion,operacion):
             copiar=True
             continue
         elif(i=='ˆ'):
+            #Arreglar
             new+="**"
             continue
         elif(i=='·'):
@@ -58,7 +59,7 @@ def operacionEspecial(funcion,operacion):
         new+="**(1/2)"
     elif(operacion == 'e'):
         new="exp"+ new +")"
-        print(new)
+        #print(new)
 
     return new
 
