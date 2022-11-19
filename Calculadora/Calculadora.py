@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 import Funciones_calculadora as fc 
 
 ventana=Tk()
@@ -8,9 +9,20 @@ ventana.iconbitmap("Imagenes/IconCal.ico")
 ventana.config(bg="black")
 ventana.resizable(0,0)
 
-tablero=Frame(ventana, bg="black")
-tablero.pack()
+s = ttk.Style()
+s.theme_use('default')
+s.configure('TNotebook', background="black", highlightbackground="red")
+s.configure('TNotebook.Tab', background="black",foreground='#12ED3E')
+s.map("TNotebook.Tab", background= [("selected", "#12ED3E")], foreground= [("selected", "black")])
 
+nb=ttk.Notebook(ventana, style="TNotebook")
+nb.pack(fill='both', expand='yes')
+
+tablero=Frame(nb, bg="black")
+p2=Frame(nb, bg="black")
+#tablero.pack()
+nb.add(tablero, text="Basico")
+nb.add(p2, text="Avanzado")
 miImagen=PhotoImage(file="Imagenes/fondo.png")
 fondo=Label(tablero, image=miImagen, bg="black").place(x=0, y=0)
 
