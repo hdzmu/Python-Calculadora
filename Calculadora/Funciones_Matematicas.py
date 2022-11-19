@@ -1,5 +1,8 @@
-import numpy as np
+'''import numpy as np
 numerocadena=eval("np.pi")
 print(type(numerocadena))
 
-print(np.sin(numerocadena*(np.pi/180)))
+print(np.sin(numerocadena*(np.pi/180)))'''
+
+#victor ingrese su funcion
+
