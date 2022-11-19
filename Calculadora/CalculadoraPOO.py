@@ -5,7 +5,7 @@ class Tablero:
     def __init__(self):
         self.ventana=tk.Tk()
         self.ventana.title("Steel Learning")
-        self.ventana.iconbitmap("Icono.ico")
+        self.ventana.iconbitmap("Imagenes/Icono.ico")
         self.ventana.config(bg="black")
         self.ventana.resizable(0,0)
 
@@ -17,7 +17,7 @@ class Tablero:
         self.miEstilo.configure('TNotebook', background="black")
         self.miEstilo.configure('TNotebook.Tab', background="black",foreground=self.color, font=(self.fuente,20))
         self.miEstilo.map("TNotebook.Tab", background= [("selected", self.color)], foreground= [("selected", "black")])
-        self.miImagen=tk.PhotoImage(file="Fondo.png")
+        self.miImagen=tk.PhotoImage(file="Imagenes/Fondo.png")
 
         self.nb=ttk.Notebook(self.ventana)
         self.nb.pack(fill='both', expand='yes')
