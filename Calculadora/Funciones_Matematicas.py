@@ -8,11 +8,13 @@ print(np.sin(numerocadena*(np.pi/180)))'''
 import sympy
 from sympy import *
 
-def derivarPolinomios(texto, sim,orden):
+def derivarPolinomios(texto, sim, orden):
     x = symbols(sim)
     if orden == 0 or orden == None: orden = 1
     #funcion = sympy.Poly(texto)
     derivada = diff(texto, x, orden)
 
     return (derivada)
+
+print(type(derivarPolinomios("exp(x**2)","x",1)))
 

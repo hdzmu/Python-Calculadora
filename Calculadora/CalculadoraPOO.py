@@ -9,7 +9,8 @@ class Tablero:
         self.ventana.config(bg="black")
         self.ventana.resizable(0,0)
 
-        self.fuente="Ink free"
+        #self.fuente="Ink free"
+        self.fuente="Times new roman"
         self.color="#12ED3E"
         self.miEstilo = ttk.Style()
         self.miEstilo.theme_use('default')
@@ -53,11 +54,12 @@ class Tablero:
         self.boton.grid(row=i , column=j, padx=5 , pady=5)
        
 ventana=Tablero()
+
+# Interfaz Básica
 frameBasico=ventana.misFrames("Basico")
 entBasico=ventana.entrada(frameBasico)
-
-botones=[['7','8','9','←','x²','xʸ'],['4','5','6','√','%','÷'],['1','2','3','x','+','-'],['0','.','π','±','e','n!'],['(',')','10˟','log','ln','=']]
-texto=[['7','8','9','←','²','ˆ'],['4','5','6','√(','%','÷'],['1','2','3','x','+','-'],['0','.','π','±','e','!'],['(',')','x10ˆ','log(','ln(','=']]
+botones=[['7','8','9','←','x²','xʸ'],['4','5','6','√','log','÷'],['1','2','3','ₓ','+','-'],['0','.','π','ln','e','n!'],['(',')','=','sen','cos','tan']]
+texto=[['7','8','9','←','²','ˆ'],['4','5','6','√(','log(','÷'],['1','2','3','·','+','-'],['0','.','π','ln(','e','!'],['(',')','=','sen(','cos(','tan(']]
 for i in range(5):
     for j in range(6):
         if(j<3):
@@ -67,14 +69,21 @@ for i in range(5):
 
 ventana.Botones(1,6,'CE','CE',5,1,frameBasico,entBasico)
 
+# Interfaz Avanzada
 frameAvanzado=ventana.misFrames("Avanzado")
 entAvanzada=ventana.entrada(frameAvanzado)
+botones=[['7','8','9','←','x²','xʸ'],['4','5','6','ƒ՚','log','÷'],['1','2','3','x','+','-'],['0','.','π','ln','e','n!'],['(',')','=','sen','cos','tan']]
+texto=[['7','8','9','←','²','ˆ'],['4','5','6','ƒ՚(','log(','÷'],['1','2','3','x','+','-'],['0','.','π','ln(','e','!'],['(',')','=','sin(','cos(','tan(']]
 for i in range(5):
     for j in range(6):
         if(j<3):
             ventana.Botones(i+2,j+1,botones[i][j],texto[i][j],10,1,frameAvanzado,entAvanzada)
         else:
             ventana.Botones(i+2,j+1,botones[i][j],texto[i][j],5,1,frameAvanzado,entAvanzada)
+
+ventana.Botones(1,7,"ₓ","·",5,1,frameAvanzado,entAvanzada)
+ventana.Botones(2,7,",",",",5,1,frameAvanzado,entAvanzada)
+
 ventana.Botones(1,6,'CE','CE',5,1,frameAvanzado,entAvanzada)
 
 ventana.misFrames("Matrices")
