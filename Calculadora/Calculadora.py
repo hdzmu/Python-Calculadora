@@ -23,7 +23,7 @@ p2=Frame(nb, bg="black")
 #tablero.pack()
 nb.add(tablero, text="Basico")
 nb.add(p2, text="Avanzado")
-miImagen=PhotoImage(file="Imagenes/fondo.png")
+miImagen=PhotoImage(file="Imagenes/Fondo.png")
 fondo=Label(tablero, image=miImagen, bg="black").place(x=0, y=0)
 
 textoDisplay=StringVar()
