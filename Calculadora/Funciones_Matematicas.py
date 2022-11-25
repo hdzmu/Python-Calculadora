@@ -62,3 +62,58 @@ def solosympy(texto, sim):
     
 print(solosympy("(x**2+x+3*x) + f¡(E**(x**2)-(3+8*x))+S¡(2*x)",'x'))
 
+#Jose D:
+def mainfuncion():
+    import math
+    m=0
+    F=input("digite la función que quiere realizar: ")
+    x=eval(input("argumento de la función: "))
+    if F=="secante":
+        x1=math.cos(x)
+        m=1/x1
+        print(m)
+    elif F=="cosecante":
+        x2=math.sin(x)
+        m=1/x2
+        print(m)
+    elif F=="cotangente":
+        x3=math.tan(x)
+        m=1/x3
+        print(m)
+    elif F=="arctangenteh":
+        m=math.atanh(x)
+        print(m)
+    elif F=="arcosenoh":
+        m=math.acosh(x)
+        print(m)
+    elif F=="arcsenoh":
+        m=math.asinh(x)
+        print(m)
+    elif F=="arctangente":
+        m=math.atan(x)
+        print(m)
+    elif F=="arcoseno":
+        m=math.acos(x)
+        print(m)
+    elif F=="arcseno":
+        m=math.asin(x)
+        print(m)
+    elif F=="tangenteh":
+        m=math.tanh(x)
+        print(m)
+    elif F=="cosenoh":
+        m=math.cosh(x)
+        print(m)
+    elif F=="senoh":
+        m=math.sinh(x)
+        print(m)
+    elif F=="tangente":
+        m=math.tan(x)
+        print(m)
+    elif F=="coseno":
+        m=math.cos(x)
+        print(m)
+    elif F=="seno":
+        m=math.sin(x)
+        print(m)
+#mainfuncion()
