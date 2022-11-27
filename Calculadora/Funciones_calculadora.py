@@ -114,3 +114,23 @@ def embellecedor(display):
         else:
             new+= display[i]   
     return new
+
+def aumentarMatriz(ventana,matriz,tablero,filas,columnas):
+    for i in range(2,filas,1):
+        for j in range(1,columnas+1,1):
+            if j==columnas-1:
+                matriz.append(ventana.entrada(tablero,4,i,columnas,1))
+    for i in range(1,columnas+1,1):
+        matriz.append(ventana.entrada(tablero,4,filas,i,1))
+
+def reducirMatriz(matriz,filas,columnas):
+    '''for i in range(2,filas,1):
+        for j in range(1,columnas+1,1):
+            if j==columnas-1:
+                matriz
+    for i in range(1,columnas+1,1):
+        matriz.append(ventana.entrada(tablero,4,filas,i,1))
+    for i in matriz:
+        i[1].destroy()
+        #matriz[i].destroy()
+    #matriz.clear()'''
