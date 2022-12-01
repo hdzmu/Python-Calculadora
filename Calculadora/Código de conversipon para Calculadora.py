@@ -129,19 +129,36 @@ def operar(subtexto,operacion):
 
 def parentesisInterno(texto):
     posicion = [0,0]
-    for i in range(0,len(texto),1):
-        if(texto[i] =="("):
+    contador = 0
+    for i in range(len(texto)):
+        if(texto[i-3] =="s" and texto[i-2] =="i" and texto[i-1] =="n" and texto[i] =="("):
+            contador += 1
+            continue
+        elif(texto[i-3] =="c" and texto[i-2] =="o" and texto[i-1] =="s" and texto[i] =="("):
+            contador += 1
+            continue    
+        elif(texto[i-3] =="t" and texto[i-2] =="a" and texto[i-1] =="n" and texto[i] =="("):
+            contador += 1
+            continue
+        elif(texto[i-3] =="e" and texto[i-2] =="x" and texto[i-1] =="p" and texto[i] =="("):
+            contador += 1
+            continue
+        elif(texto[i-2] =="l" and texto[i-1] =="n" and texto[i] =="("):
+            contador += 1
+            continue          
+        elif(texto[i] =="("):
             posicion[0] = i
         elif(texto[i] ==")"):
             posicion[1] = i
-            break
+            if(contador == 0):
+                break
+            contador -= 1
     return posicion
 
 def solosympy(texto, sim):
     x, C = smp.symbols(sim + ' C')
+    texto = texto.replace("E**","exp")
     subtexto = ""
-    arreglo = []
-    arreglo.append(texto)
     funcion = ""
     const = False
     posicion = []
@@ -153,16 +170,13 @@ def solosympy(texto, sim):
         elif(texto[i-1] =="S" and texto[i] == "¡"):
             funcion = "integrar"
             const = True
-
         #LUEGO SE OPERA LO SEGÚN LA FUNCIÓN
         if(funcion == "derivar"):
-            #print("El texto es: ",texto[i])
             posicion = parentesisInterno(new)
             subtexto = new[posicion[0]:posicion[1]+1]
-            new = new.replace("f¡"+subtexto, str(smp.diff(subtexto)))
+            new = new.replace("f¡"+subtexto, str(smp.diff(subtexto,x)))
 
         if(funcion == "integrar"):
-            #print("El texto es: ",texto[i])
             posicion = parentesisInterno(new)
             subtexto = new[posicion[0]:posicion[1]+1]
             new = new.replace("S¡"+subtexto, str(smp.integrate(subtexto,x)))
@@ -173,9 +187,10 @@ def solosympy(texto, sim):
         print(str(smp.simplify(new)))
     #return(new)
 
-    #FUNCIONA ESTE SÍ s
+    #FUNCIONA ESTE SÍ
     
-solosympy("2+f¡(x**2+f¡(x**2+f¡(5*x))+f¡(x**2))+f¡(x)",'x')
+solosympy("2+f¡(5*E**(x)+8*f¡(ln(x)))+S¡(cos(2*x))",'x')
+#print(diff("E**x"))
 
 def zzz(f):
     pos=[]
