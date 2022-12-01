@@ -127,60 +127,55 @@ def operar(subtexto,operacion):
 #operarParentesis("1*2^(6*(x+sen(x+3+5)))")
 #contarParentesis("2+(6*(x+(x+3)))")
 
+def parentesisInterno(texto):
+    posicion = [0,0]
+    for i in range(0,len(texto),1):
+        if(texto[i] =="("):
+            posicion[0] = i
+        elif(texto[i] ==")"):
+            posicion[1] = i
+            break
+    return posicion
+
 def solosympy(texto, sim):
     x, C = smp.symbols(sim + ' C')
     subtexto = ""
-    arreglo = {}
-    cantP1=0
-    cantP2=0
-    anidado = False
+    arreglo = []
+    arreglo.append(texto)
     funcion = ""
+    const = False
+    posicion = []
     new = texto
     for i in range(len(texto)):
         #PRIMERO SE SELECCIONA QUE FUNCION VA A HACER (SE MODIFICA PARA INTEGRARLO LUEGO)
         if(texto[i-1] =="f" and texto[i] == "¡"):
             funcion = "derivar"
-            if(anidado):
-                subtexto += texto[i]
-            anidado = True
         elif(texto[i-1] =="S" and texto[i] == "¡"):
             funcion = "integrar"
+            const = True
 
         #LUEGO SE OPERA LO SEGÚN LA FUNCIÓN
-        elif(funcion == "derivar"):
+        if(funcion == "derivar"):
             #print("El texto es: ",texto[i])
-            if(texto[i]== "("):
-                cantP1 += 1
-            elif(texto[i]== ")"):
-                cantP2 += 1
-            subtexto += texto[i]
-            print(subtexto)
-            if(cantP2 == cantP1):
-                #print(subtexto)
-                funcion = ""
-                anidado = False
-                #reemplazar = "f¡"+subtexto
-                #new = new.replace(reemplazar,str(diff(subtexto,x)))
-                subtexto = ""
-        elif(funcion == "integrar"):
-            if(texto[i]== "("):
-                cantP1 += 1
-            elif(texto[i]== ")"):
-                cantP2 += 1
-            subtexto += texto[i]
-            if(cantP2 == cantP1):
-                funcion = ""
-                #print(diff(subtexto,x))
-                #print(subtexto)
-                reemplazar = "S¡"+subtexto
-                #print(reemplazar)
-                new = new.replace(reemplazar,str(integrate(subtexto,x)+C))
-                subtexto = ""
-    
-    return (smp.sympify(new))
+            posicion = parentesisInterno(new)
+            subtexto = new[posicion[0]:posicion[1]+1]
+            new = new.replace("f¡"+subtexto, str(smp.diff(subtexto)))
 
+        if(funcion == "integrar"):
+            #print("El texto es: ",texto[i])
+            posicion = parentesisInterno(new)
+            subtexto = new[posicion[0]:posicion[1]+1]
+            new = new.replace("S¡"+subtexto, str(smp.integrate(subtexto,x)))
+        
+    if(const):
+        print(str(smp.simplify(new)+C))
+    else:                
+        print(str(smp.simplify(new)))
+    #return(new)
+
+    #FUNCIONA ESTE SÍ s
     
-print(solosympy("f¡(x**2+f¡(x**2+f¡(5*x))+f¡(x**2))+ f¡(x)",'x'))
+solosympy("2+f¡(x**2+f¡(x**2+f¡(5*x))+f¡(x**2))+f¡(x)",'x')
 
 def zzz(f):
     pos=[]
@@ -207,4 +202,3 @@ def zzz(f):
 
 
 #print(eval(str("smp.diff(funcion)")))
-print(i)
