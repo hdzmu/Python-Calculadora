@@ -1,5 +1,7 @@
 import Funciones_Matematicas as fm
-
+from numpy import matrix
+from scipy import linalg
+import numpy as np 
 def digitar(display, caracter):
     display.set(display.get() + caracter)
 
@@ -116,21 +118,44 @@ def embellecedor(display):
     return new
 
 def aumentarMatriz(ventana,matriz,tablero,filas,columnas):
-    for i in range(2,filas,1):
-        for j in range(1,columnas+1,1):
-            if j==columnas-1:
-                matriz.append(ventana.entrada(tablero,4,i,columnas,1))
-    for i in range(1,columnas+1,1):
-        matriz.append(ventana.entrada(tablero,4,filas,i,1))
+    fila=[]
+    for i in range(0,len(matriz),1):
+        matriz[i].append(ventana.entrada(tablero,4,i+2,columnas,1))
+    for i in range(0,columnas,1):
+        fila.append(ventana.entrada(tablero,4,filas+1,i+1,1))
+    matriz.append(fila)
+    fila=[]
 
 def reducirMatriz(matriz,filas,columnas):
-    '''for i in range(2,filas,1):
-        for j in range(1,columnas+1,1):
-            if j==columnas-1:
-                matriz
-    for i in range(1,columnas+1,1):
-        matriz.append(ventana.entrada(tablero,4,filas,i,1))
-    for i in matriz:
-        i[1].destroy()
-        #matriz[i].destroy()
-    #matriz.clear()'''
+    for i in range(0,filas-1,1):
+        for j in range(0,columnas,1):
+            if j+1==columnas:
+                matriz[i][j][1].destroy()
+                del matriz[i][j]
+    for j in range(0,columnas,1):
+        matriz[filas-1][j][1].destroy()
+    del matriz[filas-1]
+def resolverMatriz(matriz,filas,columnas,ent):
+    fila=[]
+    mt=[]
+    z=[]
+    b=[]
+    for i in range(0,filas,1):
+        for j in range(0,columnas,1):
+            if j+1!=columnas:
+                fila.append((matriz[i][j][0]).get())
+            else:
+                z.append((matriz[i][j][0]).get())
+        mt.append(fila)
+        fila=[]
+        b.append(z)
+        z=[]
+    mt=matrix(mt)
+    b=matrix(b)
+    sol=linalg.solve(mt,b)
+    salida=""
+    variables=["x","y","z","w"]
+    for i in range(0,len(sol),1):
+        sol[i]=round(float(sol[i]),2)
+        salida=" "+variables[i]+" = "+str(sol[i])
+        ent.set(ent.get()+salida)

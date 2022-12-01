@@ -60,7 +60,7 @@ def solosympy(texto, sim):
     return (smp.sympify(new))
 
     
-print(solosympy("(x**2+x+3*x) + f¡(E**(x**2)-(3+8*x))+S¡(2*x)",'x'))
+#print(solosympy("(x**2+x+3*x) + f¡(E**(x**2)-(3+8*x))+S¡(2*x)",'x'))
 
 #Jose D:
 def mainfuncion():
@@ -117,3 +117,5 @@ def mainfuncion():
         m=math.sin(x)
         print(m)
 #mainfuncion()
+
+    
