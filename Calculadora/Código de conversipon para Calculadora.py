@@ -132,16 +132,10 @@ def parentesisInterno(texto):
     contador = 0
     for i in range(len(texto)):
         if(len(texto)>3):
-            if(texto[i-3] =="s" and texto[i-2] =="i" and texto[i-1] =="n" and texto[i] =="("):
-                contador += 1
-                continue
-            elif(texto[i-3] =="c" and texto[i-2] =="o" and texto[i-1] =="s" and texto[i] =="("):
-                contador += 1
-                continue    
-            elif(texto[i-3] =="t" and texto[i-2] =="a" and texto[i-1] =="n" and texto[i] =="("):
-                contador += 1
-                continue
-            elif(texto[i-3] =="e" and texto[i-2] =="x" and texto[i-1] =="p" and texto[i] =="("):
+            if(texto[i-3]+texto[i-2]+texto[i-1]+texto[i] == "sin("
+                or texto[i-3]+texto[i-2]+texto[i-1]+texto[i] == "cos("
+                or texto[i-3]+texto[i-2]+texto[i-1]+texto[i] == "tan("
+                or texto[i-3]+texto[i-2]+texto[i-1]+texto[i] == "exp("):
                 contador += 1
                 continue
             elif(texto[i-2] =="l" and texto[i-1] =="n" and texto[i] =="("):
@@ -198,9 +192,8 @@ def solosympy(texto, sim):
 
     #FUNCIONA ESTE SÍ
     
-solosympy("S¡(1/x)",'x')
-x = smp.symbols('x')
-print(smp.integrate("ln(x)",x))
+#solosympy("f¡(sin(x)+cos(x))",'x')
+print(smp.simplify("cos(125)"))
 #print(diff("E**x"))
 
 def zzz(f):

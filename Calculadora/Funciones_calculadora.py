@@ -45,7 +45,6 @@ def operarAvanzado(display, funcion, diferencial):
     funcion=lenguajeUsuario(str(funcion))
     display.set(funcion)
 
-
 def operacionEspecial(funcion,operacion):
     copiar=False
     new=""
