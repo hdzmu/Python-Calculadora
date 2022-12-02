@@ -11,16 +11,18 @@ def limpiar(display):
     display.set(text)
 
 def lenguajeCodico(display):
-    display.replace("E^","exp")
-    display.replace("sen","sin")
-    display.replace("·","*")
-    display.replace("²","**2")
+    display = display.replace("²","**2")
+    display = display.replace("eˆ","exp")
+    display = display.replace("ˆ","**")
+    display = display.replace("sen","sin")
+    display = display.replace("·","*")
 
 def lenguajeUsuario(display):
-    display.replace("exp","e^")
-    display.replace("sin","sen")
-    display.replace("*","·")
-    display.replace("**2","²")
+    display = display.replace("**2","²")
+    display = display.replace("exp","eˆ")
+    display = display.replace("**","ˆ")
+    display = display.replace("sin","sen")
+    display = display.replace("*","·")
 
 
 def operar(display, funcion, operacion):
