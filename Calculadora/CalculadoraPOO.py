@@ -19,117 +19,120 @@ class Tablero:
         self.miEstilo.map("TNotebook.Tab", background= [("selected", self.color)], foreground= [("selected", "black")])
         self.miImagen=tk.PhotoImage(file="Fondo.png")
 
-        self.nb=ttk.Notebook(self.ventana)
-        self.nb.pack(fill='both', expand='yes')
+        self.notebook=ttk.Notebook(self.ventana)
+        self.notebook.pack(fill='both', expand='yes')
 
         self.filas=2
         self.columnas=3
         self.entradasMatriz=[]
+
+        self.diferencial='x'
+        self.a=0
+        self.b=0
         
-    def misFrames(self, texto):
-        self.tablero=tk.Frame(self.nb, bg="black")
+    def misFrames(self, textoMenu):
+        self.tablero=tk.Frame(self.notebook, bg="black")
         self.fondo=tk.Label(self.tablero, image=self.miImagen, bg="black").place(x=0, y=0)
-        self.pestana=self.nb.add(self.tablero, text=texto)
+        self.pestana=self.notebook.add(self.tablero, text=textoMenu)
         return self.tablero
 
-    def entrada(self,tab,w,x,y,cl):
-        self.tx=tk.StringVar()
-        self.display=tk.Entry(tab, highlightthickness=1, textvariable=self.tx, width=w)
-        self.display.grid(row=x, column=y, padx=10, pady=10, columnspan=cl)
+    def entrada(self,tablero,ancho,i,j,ncolumnas):
+        self.textoDisplay=tk.StringVar()
+        self.display=tk.Entry(tablero, highlightthickness=1, textvariable=self.textoDisplay, width=ancho)
+        self.display.grid(row=i, column=j, padx=10, pady=10, columnspan=ncolumnas)
         self.display.config(bg="black", fg=self.color, highlightbackground = self.color,highlightcolor= "white",font=(self.fuente,30), justify="right")
-        return [self.tx,self.display]
+        return [self.textoDisplay,self.display]
 
-    def tipoBoton(self, num, ent):
-        if(num=='←'):
-            self.new=ent.get()
+    def funcionBoton(self, textoFucion, display):
+        if(textoFucion=='←'):
+            self.new=display.get()
             self.new=self.new[:-1]
-            ent.set(self.new)
-        elif(num=='CE'):
-            ent.set("")
-        elif(num=='='):
-            fc.convertir(ent)
-        elif(num=="Agregar"):
+            display.set(self.new)
+        elif(textoFucion=='CE'):
+            display.set("")
+        elif(textoFucion=='OperarBasico'):
+            fc.convertir(display,'B', self.diferencial)
+        elif(textoFucion=='OperarAvanzado'):
+            fc.convertir(display,'A', self.diferencial)
+        elif(textoFucion=="Agregar"):
             if self.filas<4:
                 self.filas+=1
                 self.columnas+=1
-                fc.aumentarMatriz(self,self.entradasMatriz,ent,self.filas,self.columnas)
-        elif(num=="Quitar"):
+                fc.aumentarMatriz(self,self.entradasMatriz,display,self.filas,self.columnas)
+        elif(textoFucion=="Quitar"):
             if self.filas>2:
                 fc.reducirMatriz(self.entradasMatriz,self.filas,self.columnas)
                 self.filas-=1
                 self.columnas-=1
-        elif(num=='Escalonar'):
-            fc.resolverMatriz(self.entradasMatriz,self.filas,self.columnas,ent)
+        elif(textoFucion=='Escalonar'):
+            fc.resolverMatriz(self.entradasMatriz,self.filas,self.columnas,display)
         else:
-            ent.set(ent.get()+num)
+            display.set(display.get()+textoFucion)
     
-    def Botones(self,i,j,tx, txp, ancho, alto,tab, ent):
-        self.boton=tk.Button(tab, width=ancho, height=alto, text=tx,command=lambda:self.tipoBoton(txp,ent))
+    def Botones(self,i,j,textoBoton, textoFuncion, ancho, alto,tablero, display):
+        self.boton=tk.Button(tablero, width=ancho, height=alto, text=textoBoton,command=lambda:self.funcionBoton(textoFuncion,display))
         self.boton.config(bg="black", fg=self.color,font=(self.fuente,20))
         self.boton.grid(row=i , column=j, padx=5 , pady=5)
 
-    def textos(self,fila,columna,tab):
-        self.txl=tk.StringVar()
-        self.lb=tk.Label(tab, text=self.txl.get())
-        self.lb.config(bg="black", fg=self.color, font=(self.fuente,30))
-        self.lb.grid(row=fila, column=columna, padx=10, pady=10)
-        return self.txl
+    def textos(self,i,j,tablero):
+        self.textoLabel=tk.StringVar()
+        self.textoLabel=tk.Label(tablero, text=self.textoLabel.get())
+        self.textoLabel.config(bg="black", fg=self.color, font=(self.fuente,30))
+        self.textoLabel.grid(row=i, column=j, padx=10, pady=10)
+        return self.textoLabel
 
 
        
 ventana=Tablero()
 
-# Interfaz Básica
-frameBasico=ventana.misFrames("Basico")
-entBasico=ventana.entrada(frameBasico,25,1,1,6)
+#Pestaña Básica
+tableroBasico=ventana.misFrames("Basico")
+displayBasico=ventana.entrada(tableroBasico,25,1,1,6)
 botones=[['7','8','9','←','x²','xʸ'],['4','5','6','√','log','÷'],['1','2','3','ₓ','+','-'],['0','.','π','ln','e','n!'],['(',')','=','sen','cos','tan']]
-texto=[['7','8','9','←','²','ˆ'],['4','5','6','√(','log(','÷'],['1','2','3','·','+','-'],['0','.','π','ln(','e','!'],['(',')','=','sen(','cos(','tan(']]
+textoBotones=[['7','8','9','←','²','ˆ'],['4','5','6','√(','log(','÷'],['1','2','3','·','+','-'],['0','.','π','ln(','e','!'],['(',')','OperarBasico','sen(','cos(','tan(']]
 for i in range(5):
     for j in range(6):
         if(j<3):
-            ventana.Botones(i+2,j+1,botones[i][j],texto[i][j],10,1,frameBasico,entBasico[0])
+            ventana.Botones(i+2,j+1,botones[i][j],textoBotones[i][j],10,1,tableroBasico,displayBasico[0])
         else:
-            ventana.Botones(i+2,j+1,botones[i][j],texto[i][j],5,1,frameBasico,entBasico[0])
+            ventana.Botones(i+2,j+1,botones[i][j],textoBotones[i][j],5,1,tableroBasico,displayBasico[0])
 
-ventana.Botones(1,6,'CE','CE',5,1,frameBasico,entBasico[0])
+ventana.Botones(1,6,'CE','CE',5,1,tableroBasico,displayBasico[0])
 
-# Interfaz Avanzada
-frameAvanzado=ventana.misFrames("Avanzado")
-entAvanzada=ventana.entrada(frameAvanzado,25,1,1,6)
-botones=[['7','8','9','←','x²','xʸ'],['4','5','6','ƒ՚','log','÷'],['1','2','3','x','+','-'],['0','.','π','ln','e','n!'],['(',')','=','sen','cos','tan']]
-texto=[['7','8','9','←','²','ˆ'],['4','5','6','ƒ՚(','log(','÷'],['1','2','3','x','+','-'],['0','.','π','ln(','e','!'],['(',')','=','sin(','cos(','tan(']]
+#Pestaña Avanzada
+tableroAvanzado=ventana.misFrames("Avanzado")
+displayAvanzado=ventana.entrada(tableroAvanzado,25,1,1,6)
+botones=[['7','8','9','←','x','y'],['4','5','6','ƒ՚','∫','÷'],['1','2','3','ₓ','+','-'],['0','.','π','ln','e','xʸ'],['(',')','=','sen','cos','tan']]
+textoBotones=[['7','8','9','←','x','y'],['4','5','6','ƒ՚(','∫(','÷'],['1','2','3','·','+','-'],['0','.','π','ln(','eˆ(','ˆ'],['(',')','OperarAvanzado','sen(','cos(','tan(']]
 for i in range(5):
     for j in range(6):
         if(j<3):
-            ventana.Botones(i+2,j+1,botones[i][j],texto[i][j],10,1,frameAvanzado,entAvanzada[0])
+            ventana.Botones(i+2,j+1,botones[i][j],textoBotones[i][j],10,1,tableroAvanzado,displayAvanzado[0])
         else:
-            ventana.Botones(i+2,j+1,botones[i][j],texto[i][j],5,1,frameAvanzado,entAvanzada[0])
+            ventana.Botones(i+2,j+1,botones[i][j],textoBotones[i][j],5,1,tableroAvanzado,displayAvanzado[0])
 
-ventana.Botones(1,7,"ₓ","·",5,1,frameAvanzado,entAvanzada[0])
-ventana.Botones(2,7,",",",",5,1,frameAvanzado,entAvanzada[0])
+ventana.Botones(1,6,'CE','CE',5,1,tableroAvanzado,displayAvanzado[0])
 
-ventana.Botones(1,6,'CE','CE',5,1,frameAvanzado,entAvanzada[0])
+#Pestaña Matrices y Vectores
+TableroMatrices=ventana.misFrames("Matrices y Vectores")
+DisplayMatriz=ventana.entrada(TableroMatrices,25,6,1,5)
 
-frMatrices=ventana.misFrames("Matrices")
-entMatriz=ventana.entrada(frMatrices,25,6,1,5)
-
-ventana.Botones(1,1,'+','Agregar',6,1,frMatrices,frMatrices)
-ventana.Botones(1,2,'-','Quitar',6,1,frMatrices,frMatrices)
-ventana.Botones(1,3,'←','Limpiar',6,1,frMatrices,frMatrices)
-ventana.Botones(1,4,'=','Escalonar',6,1,frMatrices,entMatriz[0])
+ventana.Botones(1,1,'+','Agregar',6,1,TableroMatrices,TableroMatrices)
+ventana.Botones(1,2,'-','Quitar',6,1,TableroMatrices,TableroMatrices)
+ventana.Botones(1,3,'←','Limpiar',6,1,TableroMatrices,TableroMatrices)
+ventana.Botones(1,4,'=','Escalonar',6,1,TableroMatrices,DisplayMatriz[0])
 
 filas=[]
-filas.append(ventana.entrada(frMatrices,4,2,1,1))
-filas.append(ventana.entrada(frMatrices,4,2,2,1))
-filas.append(ventana.entrada(frMatrices,4,2,3,1))
+filas.append(ventana.entrada(TableroMatrices,4,2,1,1))
+filas.append(ventana.entrada(TableroMatrices,4,2,2,1))
+filas.append(ventana.entrada(TableroMatrices,4,2,3,1))
 ventana.entradasMatriz.append(filas)
 
 filas=[]
-filas.append(ventana.entrada(frMatrices,4,3,1,1))
-filas.append(ventana.entrada(frMatrices,4,3,2,1))
-filas.append(ventana.entrada(frMatrices,4,3,3,1))
+filas.append(ventana.entrada(TableroMatrices,4,3,1,1))
+filas.append(ventana.entrada(TableroMatrices,4,3,2,1))
+filas.append(ventana.entrada(TableroMatrices,4,3,3,1))
 ventana.entradasMatriz.append(filas)
-
 
 ventana.ventana.mainloop()
 

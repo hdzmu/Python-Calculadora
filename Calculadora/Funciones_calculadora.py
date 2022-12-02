@@ -10,42 +10,39 @@ def limpiar(display):
     text=text[:-1]
     display.set(text)
 
-def lenguajeCodico(display):
-    display = display.replace("²","**2")
-    display = display.replace("eˆ","exp")
-    display = display.replace("ˆ","**")
-    display = display.replace("sen","sin")
-    display = display.replace("·","*")
+def lenguajeCodigo(funcion):
+    funcion = funcion.replace("²","**2")
+    funcion = funcion.replace("eˆ","exp")
+    funcion = funcion.replace("ˆ","**")
+    funcion = funcion.replace("sen","sin") 
+    funcion = funcion.replace("·","*")
+    funcion = funcion.replace("÷","/")
+    return funcion
+    
 
-def lenguajeUsuario(display):
-    display = display.replace("**2","²")
-    display = display.replace("exp","eˆ")
-    display = display.replace("**","ˆ")
-    display = display.replace("sin","sen")
-    display = display.replace("*","·")
+def lenguajeUsuario(funcion):
+    funcion = funcion.replace("**2","²")
+    funcion = funcion.replace("exp","eˆ")
+    funcion = funcion.replace("**","ˆ")
+    funcion = funcion.replace("sin","sen")
+    funcion = funcion.replace("*","·")
+    funcion = funcion.replace("np.pi","π")
+    funcion = funcion.replace("/","÷")
+    return funcion
 
-
-def operar(display, funcion, operacion):
-    import numpy as np
-    texto = display.get()
-    if(operacion=="ƒ"):
-        sim = "x"
-        cont = 0
-        orden = 0
-        for i in range(len(texto)-1):
-            if(texto[i]==","):
-                cont+=1
-                if(cont == 1):
-                    sim = texto[i+1]
-                elif(cont==2): 
-                    orden = texto[i+1]
-        result = fm.derivarPolinomios(funcion,sim,orden)
-        display.set(result)
-        emb = embellecedor(display.get())
-        display.set(emb)
-        
-    else:
-        display.set(eval(funcion))
+def operarBasico(display, funcion):
+    funcion = funcion.replace("π","*"+str(np.pi))
+    funcion=lenguajeCodigo(funcion)
+    funcion=round(float(eval(funcion)),4)
+    funcion=lenguajeUsuario(str(funcion))
+    display.set(funcion)
+    
+def operarAvanzado(display, funcion, diferencial):
+    funcion = funcion.replace("π","pi")
+    funcion=lenguajeCodigo(funcion)
+    funcion=fm.fx991(funcion,diferencial)
+    funcion=lenguajeUsuario(str(funcion))
+    display.set(funcion)
 
 
 def operacionEspecial(funcion,operacion):
@@ -55,17 +52,7 @@ def operacionEspecial(funcion,operacion):
         if(i==operacion):
             copiar=True
             continue
-        elif(i=='ˆ'):
-            #Arreglar
-            new+="**"
-            continue
-        elif(i=='·'):
-            new+="*"
-            continue
-        elif(i=='²'):
-            new+="**2"
-            continue
-        if(i==')'):
+        elif(i==')'):
             copiar=False
             new+=i
             break
@@ -74,64 +61,26 @@ def operacionEspecial(funcion,operacion):
     
     if(operacion =='√'):
         new+="**(1/2)"
-    elif(operacion == 'e'):
-        new="exp"+ new +")"
-        #print(new)
-
     return new
 
-def convertir(display):
+def convertir(display, tipoOperacion, diferencial):
     funcion=display.get()
     new=""
     salto=0
     operacion = ""
-    especial=False
     for i in funcion:
         if(salto==0):
-            if(i=='ₓ'):
-                new+='*'
-            elif(i=='·'):
-                new+='*'
-            elif(i=='π'):
-                new+="*np.pi"
-            elif(i=='²'):
-                new+="**2"
-            elif(i=='ˆ'):
-                new+="**"
-            elif(i=='÷'):
-                new+="/"
-            elif(i=='e'):
-                new+=operacionEspecial(funcion,'e')
-                salto=len(operacionEspecial(funcion,'e'))
-            elif(i=='√'):
+            if(i=='√'):
                 new+=operacionEspecial(funcion,'√')
                 salto=len(operacionEspecial(funcion,'√'))
-            elif(i=='ƒ' or i== '՚'):
-                operacion = "ƒ"
-                continue
-            elif(i==","):
-                break
             else:
                 new+=i
         else:
             salto-=1
-    operar(display,new, operacion)
-
-def embellecedor(display):
-    #print(display)
-    new=""
-    for i in range(len(display)):
-        if(display[i]=='*'):
-            if(display[i+1]=='*'):
-                new+='ˆ'               
-            else:
-                if(new[len(new)-1]!='ˆ'):
-                    new+='·'
-
-        else:
-            new+= display[i]   
-    return new
-
+    if tipoOperacion=='B':
+        operarBasico(display,new)
+    elif tipoOperacion=='A':
+        operarAvanzado(display,new, diferencial)
 def aumentarMatriz(ventana,matriz,tablero,filas,columnas):
     fila=[]
     for i in range(0,len(matriz),1):
