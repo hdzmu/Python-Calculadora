@@ -10,6 +10,19 @@ def limpiar(display):
     text=text[:-1]
     display.set(text)
 
+def lenguajeCodico(display):
+    display.replace("E^","exp")
+    display.replace("sen","sin")
+    display.replace("·","*")
+    display.replace("²","**2")
+
+def lenguajeUsuario(display):
+    display.replace("exp","e^")
+    display.replace("sin","sen")
+    display.replace("*","·")
+    display.replace("**2","²")
+
+
 def operar(display, funcion, operacion):
     import numpy as np
     texto = display.get()
