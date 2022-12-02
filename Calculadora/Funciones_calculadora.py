@@ -42,7 +42,7 @@ def operarBasico(display, funcion):
 def operarAvanzado(display, funcion, diferencial):
     funcion = funcion.replace("π","pi")
     funcion=lenguajeCodigo(funcion)
-    funcion=fm.fx991(funcion,diferencial)
+    funcion=fm.fx991(funcion,diferencial,0,0)
     funcion=lenguajeUsuario(str(funcion))
     display.set(funcion)
 
