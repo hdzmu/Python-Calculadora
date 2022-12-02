@@ -35,7 +35,6 @@ def lenguajeUsuario(funcion):
 def operarBasico(display, funcion):
     funcion = funcion.replace("π","*"+str(np.pi))
     funcion=lenguajeCodigo(funcion)
-    print("zzzzzzz", funcion)
     funcion=(eval(funcion))
     funcion=lenguajeUsuario(str(funcion))
     display.set(funcion)
@@ -129,3 +128,4 @@ def resolverMatriz(matriz,filas,columnas,ent):
         sol[i]=round(float(sol[i]),2)
         salida=" "+variables[i]+" = "+str(sol[i])
         ent.set(ent.get()+salida)
+##zzz
