@@ -26,6 +26,7 @@ def lenguajeUsuario(funcion):
     funcion = funcion.replace("**","ˆ")
     funcion = funcion.replace("sin","sen")
     funcion = funcion.replace("*","·")
+    funcion = funcion.replace("log","ln")
     funcion = funcion.replace("np.pi","π")
     funcion = funcion.replace("/","÷")
     return funcion

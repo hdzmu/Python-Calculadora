@@ -11,48 +11,75 @@ def derivarPolinomios(texto, sim, orden):
 
     return (derivada)
 
-print(type(derivarPolinomios("exp(x**2)","x",1)))
+#print(type(derivarPolinomios("exp(x**2)","x",1)))
+
+def parentesisInterno(texto):
+    posicion = [0,0]
+    contador = 0
+    for i in range(len(texto)):
+        if(len(texto)>3):
+            if(texto[i-3] =="s" and texto[i-2] =="i" and texto[i-1] =="n" and texto[i] =="("):
+                contador += 1
+                continue
+            elif(texto[i-3] =="c" and texto[i-2] =="o" and texto[i-1] =="s" and texto[i] =="("):
+                contador += 1
+                continue    
+            elif(texto[i-3] =="t" and texto[i-2] =="a" and texto[i-1] =="n" and texto[i] =="("):
+                contador += 1
+                continue
+            elif(texto[i-3] =="e" and texto[i-2] =="x" and texto[i-1] =="p" and texto[i] =="("):
+                contador += 1
+                continue
+            elif(texto[i-2] =="l" and texto[i-1] =="n" and texto[i] =="("):
+                contador += 1
+                continue          
+            elif(texto[i] =="("):
+                posicion[0] = i
+            elif(texto[i] ==")"):
+                posicion[1] = i
+                if(contador == 0):
+                    break
+                contador -= 1
+        else:
+            if(texto[i] =="("):
+                posicion[0] = i
+            elif(texto[i] ==")"):
+                posicion[1] = i
+                if(contador == 0):
+                    break
+                contador -= 1
+    return posicion
 
 def fx991(texto, sim):
     x, C = smp.symbols(sim + ' C')
+    texto = texto.replace("E**","exp")
     subtexto = ""
-    cantP1=0
-    cantP2=0
     funcion = ""
+    const = False
+    posicion = []
     new = texto
     for i in range(len(texto)):
-        #PRIMERO SE SELECCIONA QUE FUNCION VA A HACER
+        #PRIMERO SE SELECCIONA QUE FUNCION VA A HACER (SE MODIFICA PARA INTEGRARLO LUEGO)
         if(texto[i-1] =="ƒ" and texto[i] == "՚"):
             funcion = "derivar"
         elif(texto[i] =="∫"):
             funcion = "integrar"
-
-
+            const = True
         #LUEGO SE OPERA LO SEGÚN LA FUNCIÓN
-        elif(funcion == "derivar"):
-            if(texto[i]== "("):
-                cantP1 += 1
-            elif(texto[i]== ")"):
-                cantP2 += 1
-            subtexto += texto[i]
-            if(cantP2 == cantP1):
-                funcion = ""
-                reemplazar = "ƒ՚"+subtexto
-                new = new.replace(reemplazar,str(diff(subtexto,x)))
-                subtexto = ""
-        elif(funcion == "integrar"):
-            if(texto[i]== "("):
-                cantP1 += 1
-            elif(texto[i]== ")"):
-                cantP2 += 1
-            subtexto += texto[i]
-            if(cantP2 == cantP1):
-                funcion = ""
-                reemplazar = "∫"+subtexto
-                new = new.replace(reemplazar,str(integrate(subtexto,x)+C))
-                subtexto = ""
-    
-    return (smp.sympify(new))
+        if(funcion == "derivar"):
+            posicion = parentesisInterno(new)
+            subtexto = new[posicion[0]:posicion[1]+1]
+            new = new.replace("ƒ՚"+subtexto, str(smp.diff(subtexto,x)))
+
+        if(funcion == "integrar"):
+            posicion = parentesisInterno(new)
+            subtexto = new[posicion[0]:posicion[1]+1]
+            new = new.replace("∫"+subtexto, str(smp.integrate(subtexto,x)))
+        
+    if(const):
+        return(smp.simplify(new)+C)
+    else:                
+        return(smp.simplify(new))
 
     
 #print(solosympy("(x**2+x+3*x) + f¡(E**(x**2)-(3+8*x))+S¡(2*x)",'x'))

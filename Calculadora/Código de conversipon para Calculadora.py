@@ -131,28 +131,37 @@ def parentesisInterno(texto):
     posicion = [0,0]
     contador = 0
     for i in range(len(texto)):
-        if(texto[i-3] =="s" and texto[i-2] =="i" and texto[i-1] =="n" and texto[i] =="("):
-            contador += 1
-            continue
-        elif(texto[i-3] =="c" and texto[i-2] =="o" and texto[i-1] =="s" and texto[i] =="("):
-            contador += 1
-            continue    
-        elif(texto[i-3] =="t" and texto[i-2] =="a" and texto[i-1] =="n" and texto[i] =="("):
-            contador += 1
-            continue
-        elif(texto[i-3] =="e" and texto[i-2] =="x" and texto[i-1] =="p" and texto[i] =="("):
-            contador += 1
-            continue
-        elif(texto[i-2] =="l" and texto[i-1] =="n" and texto[i] =="("):
-            contador += 1
-            continue          
-        elif(texto[i] =="("):
-            posicion[0] = i
-        elif(texto[i] ==")"):
-            posicion[1] = i
-            if(contador == 0):
-                break
-            contador -= 1
+        if(len(texto)>3):
+            if(texto[i-3] =="s" and texto[i-2] =="i" and texto[i-1] =="n" and texto[i] =="("):
+                contador += 1
+                continue
+            elif(texto[i-3] =="c" and texto[i-2] =="o" and texto[i-1] =="s" and texto[i] =="("):
+                contador += 1
+                continue    
+            elif(texto[i-3] =="t" and texto[i-2] =="a" and texto[i-1] =="n" and texto[i] =="("):
+                contador += 1
+                continue
+            elif(texto[i-3] =="e" and texto[i-2] =="x" and texto[i-1] =="p" and texto[i] =="("):
+                contador += 1
+                continue
+            elif(texto[i-2] =="l" and texto[i-1] =="n" and texto[i] =="("):
+                contador += 1
+                continue          
+            elif(texto[i] =="("):
+                posicion[0] = i
+            elif(texto[i] ==")"):
+                posicion[1] = i
+                if(contador == 0):
+                    break
+                contador -= 1
+        else:
+            if(texto[i] =="("):
+                posicion[0] = i
+            elif(texto[i] ==")"):
+                posicion[1] = i
+                if(contador == 0):
+                    break
+                contador -= 1
     return posicion
 
 def solosympy(texto, sim):
@@ -189,7 +198,9 @@ def solosympy(texto, sim):
 
     #FUNCIONA ESTE SÍ
     
-solosympy("2+f¡(5*E**(x)+8*f¡(ln(x)))+S¡(cos(2*x))",'x')
+solosympy("S¡(1/x)",'x')
+x = smp.symbols('x')
+print(smp.integrate("ln(x)",x))
 #print(diff("E**x"))
 
 def zzz(f):
