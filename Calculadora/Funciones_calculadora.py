@@ -2,6 +2,7 @@ import Funciones_Matematicas as fm
 from numpy import matrix
 from scipy import linalg
 import numpy as np 
+import math
 def digitar(display, caracter):
     display.set(display.get() + caracter)
 
@@ -34,7 +35,8 @@ def lenguajeUsuario(funcion):
 def operarBasico(display, funcion):
     funcion = funcion.replace("π","*"+str(np.pi))
     funcion=lenguajeCodigo(funcion)
-    funcion=round(float(eval(funcion)),4)
+    print("zzzzzzz", funcion)
+    funcion=(eval(funcion))
     funcion=lenguajeUsuario(str(funcion))
     display.set(funcion)
     
@@ -44,6 +46,7 @@ def operarAvanzado(display, funcion, diferencial):
     funcion=fm.fx991(funcion,diferencial)
     funcion=lenguajeUsuario(str(funcion))
     display.set(funcion)
+
 
 def operacionEspecial(funcion,operacion):
     copiar=False
@@ -67,14 +70,17 @@ def convertir(display, tipoOperacion, diferencial):
     funcion=display.get()
     new=""
     salto=0
-    operacion = ""
-    for i in funcion:
+    for i in range(0,len(funcion),1):
         if(salto==0):
-            if(i=='√'):
+            if(funcion[i]=='√'):
                 new+=operacionEspecial(funcion,'√')
                 salto=len(operacionEspecial(funcion,'√'))
+            elif funcion[i]=='s' or funcion[i]=='c' or  funcion[i]=='t':
+                if(funcion[i]+funcion[i+1]+funcion[i+2]=="sen" or funcion[i]+funcion[i+1]+funcion[i+2]=="cos" or  funcion[i]+funcion[i+1]+funcion[i+2]=="tan"):
+                    new+="math."+funcion[i]+funcion[i+1]+funcion[i+2]
+                    salto=2
             else:
-                new+=i
+                new+=funcion[i]
         else:
             salto-=1
     if tipoOperacion=='B':
