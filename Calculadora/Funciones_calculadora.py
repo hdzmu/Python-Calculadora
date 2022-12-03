@@ -28,8 +28,9 @@ def lenguajeUsuario(funcion):
     funcion = funcion.replace("sin","sen")
     funcion = funcion.replace("*","·")
     funcion = funcion.replace("log","ln")
-    funcion = funcion.replace("np.pi","π")
+    funcion = funcion.replace("pi","π")
     funcion = funcion.replace("/","÷")
+    funcion = funcion.replace("I","i")
     return funcion
 
 def operarBasico(display, funcion):
@@ -40,11 +41,14 @@ def operarBasico(display, funcion):
     display.set(funcion)
     
 def operarAvanzado(display, funcion, diferencial):
-    funcion = funcion.replace("π","pi")
-    funcion=lenguajeCodigo(funcion)
-    funcion=fm.fx991(funcion,diferencial,0,0)
-    funcion=lenguajeUsuario(str(funcion))
-    display.set(funcion)
+    try:
+        funcion = funcion.replace("π","pi")
+        funcion = lenguajeCodigo(funcion)
+        funcion = fm.fx991(funcion,diferencial, 0, 0)
+        funcion = lenguajeUsuario(str(funcion))        
+        display.set(funcion)
+    except:
+        display.set("Syntax Error")
 
 
 def operacionEspecial(funcion,operacion):

@@ -192,10 +192,6 @@ def solosympy(texto, sim):
 
     #FUNCIONA ESTE SÍ
     
-#solosympy("f¡(sin(x)+cos(x))",'x')
-print(smp.simplify("cos(125)"))
-#print(diff("E**x"))
-
 def zzz(f):
     pos=[]
     inicio=1
@@ -212,12 +208,4 @@ def zzz(f):
         pos.append([inicio,len(f)-1])
     print(pos)
     print(len(pos))
-
-#zzz("f¡[sin(x)+f¡(cos(x))]+f¡(x)")
-#x='x'
-#funcion2='3*(x*x)'
-
-#funcion=str("x+x+smp.diff(x**2)")
-
-
-#print(eval(str("smp.diff(funcion)")))
+#print(smp.simplify(("ln(-1)")))

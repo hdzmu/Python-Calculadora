@@ -68,13 +68,13 @@ def fx991(texto, sim, a, b):
         if(funcion == "integrar"):
             posicion = parentesisInterno(new)
             subtexto = new[posicion[0]:posicion[1]+1]
-            if(a, b != 0):
+            if(a != b):
                 new = new.replace("∫"+subtexto, str(smp.integrate(subtexto,(x,a,b))))
             else:
                 new = new.replace("∫"+subtexto, str(smp.integrate(subtexto,x)))
         
-    if(const):
-        return(smp.simplify(new)+C)
+    if(const and a == b):
+        return(smp.simplify(new) + C)
     else:                
         return(smp.simplify(new))
 
