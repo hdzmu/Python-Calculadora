@@ -1,4 +1,3 @@
-#victor ingrese su funcion
 import sympy as smp
 from sympy import *
 import numpy as np 
@@ -79,5 +78,4 @@ def fx991(texto, sim, a, b):
         return(smp.simplify(new))
 
     
-print(fx991("(∫(3*x))",'x','1','1'))
-#print(type(np.pi))
+#print(fx991("(∫(3*x))",'x','1','1'))

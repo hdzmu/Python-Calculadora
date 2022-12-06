@@ -134,4 +134,3 @@ def resolverMatriz(matriz,filas,columnas,ent):
         sol[i]=round(float(sol[i]),2)
         salida=" "+variables[i]+" = "+str(sol[i])
         ent.set(ent.get()+salida)
-##zzz
