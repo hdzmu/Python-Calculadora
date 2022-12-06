@@ -79,5 +79,5 @@ def fx991(texto, sim, a, b):
         return(smp.simplify(new))
 
     
-#print(solosympy("(x**2+x+3*x) + f¡(E**(x**2)-(3+8*x))+S¡(2*x)",'x'))
+print(fx991("(∫(3*x))",'x','1','1'))
 #print(type(np.pi))

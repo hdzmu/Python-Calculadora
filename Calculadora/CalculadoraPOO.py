@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import Funciones_calculadora as fc
 class Tablero:
+    
     def __init__(self):
         self.ventana=tk.Tk()
         self.ventana.title("Steel Learning")
@@ -18,7 +19,7 @@ class Tablero:
         self.miEstilo.configure('TNotebook.Tab', background="black",foreground=self.color, font=(self.fuente,20))
         self.miEstilo.map("TNotebook.Tab", background= [("selected", self.color)], foreground= [("selected", "black")])
         self.miImagen=tk.PhotoImage(file="Fondo.png")
-
+        
         self.notebook=ttk.Notebook(self.ventana)
         self.notebook.pack(fill='both', expand='yes')
 
@@ -29,6 +30,7 @@ class Tablero:
         self.diferencial='x'
         self.a=0
         self.b=0
+        self.integrar=False
         
     def misFrames(self, textoMenu):
         self.tablero=tk.Frame(self.notebook, bg="black")
@@ -43,44 +45,72 @@ class Tablero:
         self.display.config(bg="black", fg=self.color, highlightbackground = self.color,highlightcolor= "white",font=(self.fuente,30), justify="right")
         return [self.textoDisplay,self.display]
 
-    def funcionBoton(self, textoFucion, display):
-        if(textoFucion=='←'):
+    def funcionBoton(self, textoFuncion, display):
+        if(textoFuncion=='←'):
             self.new=display.get()
             self.new=self.new[:-1]
             display.set(self.new)
-        elif(textoFucion=='CE'):
+        elif(textoFuncion=='CE'):
             display.set("")
-        elif(textoFucion=='OperarBasico'):
+        elif(textoFuncion=='OperarBasico'):
             fc.convertir(display,'B', self.diferencial)
-        elif(textoFucion=='OperarAvanzado'):
-            fc.convertir(display,'A', self.diferencial)
-        elif(textoFucion=="Agregar"):
+        elif(textoFuncion=='∫('):
+            display.set(display.get()+textoFuncion)
+            self.integrar=True
+        elif(textoFuncion=='OperarAvanzado'):
+            if(self.integrar==True):
+                self.a=0
+                self.b=0
+                self.ventanaLimites(display)
+            else:
+                fc.convertir(display,'A', self.diferencial,self.a,self.b)
+        elif(textoFuncion=="Agregar"):
             if self.filas<4:
                 self.filas+=1
                 self.columnas+=1
                 fc.aumentarMatriz(self,self.entradasMatriz,display,self.filas,self.columnas)
-        elif(textoFucion=="Quitar"):
+        elif(textoFuncion=="Quitar"):
             if self.filas>2:
                 fc.reducirMatriz(self.entradasMatriz,self.filas,self.columnas)
                 self.filas-=1
                 self.columnas-=1
-        elif(textoFucion=='Escalonar'):
+        elif(textoFuncion=='Escalonar'):
             fc.resolverMatriz(self.entradasMatriz,self.filas,self.columnas,display)
+        elif(textoFuncion=='Aceptar_L'):
+            if self.a_L[0].get()!="" or self.b_L[0].get()!="":
+                self.a=self.a_L[0].get()
+                self.b=self.b_L[0].get()
+            self.integrar=False
+            self.ventana_L.destroy()
+            fc.convertir(display,'A', self.diferencial,self.a,self.b)
         else:
-            display.set(display.get()+textoFucion)
+            display.set(display.get()+textoFuncion)
     
     def Botones(self,i,j,textoBoton, textoFuncion, ancho, alto,tablero, display):
         self.boton=tk.Button(tablero, width=ancho, height=alto, text=textoBoton,command=lambda:self.funcionBoton(textoFuncion,display))
         self.boton.config(bg="black", fg=self.color,font=(self.fuente,20))
         self.boton.grid(row=i , column=j, padx=5 , pady=5)
 
-    def textos(self,i,j,tablero):
+    def textos(self,i,j,tablero, texto):
         self.textoLabel=tk.StringVar()
+        self.textoLabel.set(texto)
         self.textoLabel=tk.Label(tablero, text=self.textoLabel.get())
         self.textoLabel.config(bg="black", fg=self.color, font=(self.fuente,30))
         self.textoLabel.grid(row=i, column=j, padx=10, pady=10)
-        return self.textoLabel
-
+    def ventanaLimites(self,display):
+        self.ventana_L=tk.Toplevel()
+        self.ventana_L.title("Limites de Integracion")
+        self.ventana_L.iconbitmap("Icono.ico")
+        self.ventana_L.config(bg="black")
+        self.ventana_L.resizable(0,0)
+        self.tablero_L=tk.Frame(self.ventana_L, bg="black")
+        self.fondo_L=tk.Label(self.tablero_L, image=self.miImagen, bg="black").place(x=0, y=0)
+        self.tablero_L.pack()
+        self.textos(1,1,self.tablero_L,"a: ")
+        self.a_L=self.entrada(self.tablero_L,4,1,2,1)
+        self.textos(2,1,self.tablero_L,"b: ")
+        self.b_L=self.entrada(self.tablero_L,4,2,2,1)
+        self.Botones(3,2,"Aceptar", "Aceptar_L", 10, 1,self.tablero_L, display)
 
        
 ventana=Tablero()

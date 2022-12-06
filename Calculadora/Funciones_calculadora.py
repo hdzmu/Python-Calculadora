@@ -40,11 +40,11 @@ def operarBasico(display, funcion):
     funcion=lenguajeUsuario(str(funcion))
     display.set(funcion)
     
-def operarAvanzado(display, funcion, diferencial):
+def operarAvanzado(display, funcion, diferencial,a,b):
     try:
         funcion = funcion.replace("π","pi")
         funcion = lenguajeCodigo(funcion)
-        funcion = fm.fx991(funcion,diferencial, 0, 0)
+        funcion = fm.fx991(funcion,diferencial, a, b)
         funcion = lenguajeUsuario(str(funcion))        
         display.set(funcion)
     except:
@@ -69,7 +69,7 @@ def operacionEspecial(funcion,operacion):
         new+="**(1/2)"
     return new
 
-def convertir(display, tipoOperacion, diferencial):
+def convertir(display, tipoOperacion, diferencial,a,b):
     funcion=display.get()
     new=""
     salto=0
@@ -89,7 +89,8 @@ def convertir(display, tipoOperacion, diferencial):
     if tipoOperacion=='B':
         operarBasico(display,new)
     elif tipoOperacion=='A':
-        operarAvanzado(display,new, diferencial)
+        operarAvanzado(display,new, diferencial,a,b)
+
 def aumentarMatriz(ventana,matriz,tablero,filas,columnas):
     fila=[]
     for i in range(0,len(matriz),1):
@@ -108,6 +109,7 @@ def reducirMatriz(matriz,filas,columnas):
     for j in range(0,columnas,1):
         matriz[filas-1][j][1].destroy()
     del matriz[filas-1]
+
 def resolverMatriz(matriz,filas,columnas,ent):
     fila=[]
     mt=[]
