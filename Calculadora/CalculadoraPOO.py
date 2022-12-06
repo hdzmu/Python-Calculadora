@@ -54,7 +54,7 @@ class Tablero:
             self.integrar=False
             display.set("")
         elif(textoFuncion=='OperarBasico'):
-            fc.convertir(display,'B', self.diferencial)
+            fc.convertir(display,'B', self.diferencial, self.a, self.b)
         elif(textoFuncion=='∫('):
             display.set(display.get()+textoFuncion)
             self.integrar=True
