@@ -51,6 +51,7 @@ class Tablero:
             self.new=self.new[:-1]
             display.set(self.new)
         elif(textoFuncion=='CE'):
+            self.integrar=False
             display.set("")
         elif(textoFuncion=='OperarBasico'):
             fc.convertir(display,'B', self.diferencial)
@@ -63,7 +64,10 @@ class Tablero:
                 self.b=0
                 self.ventanaLimites(display)
             else:
-                fc.convertir(display,'A', self.diferencial,self.a,self.b)
+                if 'y' in display.get():
+                    self.dxdzdy(display)
+                else:
+                    fc.convertir(display,'A', self.diferencial,self.a,self.b)
         elif(textoFuncion=="Agregar"):
             if self.filas<4:
                 self.filas+=1
@@ -83,6 +87,10 @@ class Tablero:
             self.integrar=False
             self.ventana_L.destroy()
             fc.convertir(display,'A', self.diferencial,self.a,self.b)
+        elif(textoFuncion=='Aceptar_D'):
+            self.diferencial=self.D[0].get()
+            self.ventana_D.destroy()
+            fc.convertir(display,'A', self.diferencial,self.a,self.b)
         else:
             display.set(display.get()+textoFuncion)
     
@@ -97,6 +105,7 @@ class Tablero:
         self.textoLabel=tk.Label(tablero, text=self.textoLabel.get())
         self.textoLabel.config(bg="black", fg=self.color, font=(self.fuente,30))
         self.textoLabel.grid(row=i, column=j, padx=10, pady=10)
+
     def ventanaLimites(self,display):
         self.ventana_L=tk.Toplevel()
         self.ventana_L.title("Limites de Integracion")
@@ -111,6 +120,20 @@ class Tablero:
         self.textos(2,1,self.tablero_L,"b: ")
         self.b_L=self.entrada(self.tablero_L,4,2,2,1)
         self.Botones(3,2,"Aceptar", "Aceptar_L", 10, 1,self.tablero_L, display)
+    
+    def dxdzdy(self,display):
+        self.ventana_D=tk.Toplevel()
+        self.ventana_D.title("Limites de Integracion")
+        self.ventana_D.iconbitmap("Icono.ico")
+        self.ventana_D.config(bg="black")
+        self.ventana_D.resizable(0,0)
+        self.tablero_D=tk.Frame(self.ventana_D, bg="black")
+        self.fondo_D=tk.Label(self.tablero_D, image=self.miImagen, bg="black").place(x=0, y=0)
+        self.tablero_D.pack()
+        self.textos(1,1,self.tablero_D,"Ingrese diferencial: ")
+        self.D=self.entrada(self.tablero_D,4,1,2,1)
+        self.Botones(3,1,"Aceptar", "Aceptar_D", 10, 1,self.tablero_D, display)
+    
 
        
 ventana=Tablero()
