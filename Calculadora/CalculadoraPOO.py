@@ -30,7 +30,7 @@ class Tablero:
         self.a=0
         self.b=0
         self.integrar=False
-        
+
     def misFrames(self, textoMenu):
         self.tablero=tk.Frame(self.notebook, bg="black")
         self.fondo=tk.Label(self.tablero, image=self.miImagen, bg="black").place(x=0, y=0)
@@ -122,7 +122,7 @@ class Tablero:
     
     def dxdzdy(self,display):
         self.ventana_D=tk.Toplevel()
-        self.ventana_D.title("Limites de Integracion")
+        self.ventana_D.title("Diferencial")
         self.ventana_D.iconbitmap("Icono.ico")
         self.ventana_D.config(bg="black")
         self.ventana_D.resizable(0,0)
