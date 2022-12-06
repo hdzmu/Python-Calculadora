@@ -58,14 +58,19 @@ class Tablero:
             display.set(display.get()+textoFuncion)
             self.integrar=True
         elif(textoFuncion=='OperarAvanzado'):
+            self.diferencial='x'
             if(self.integrar==True):
                 self.a=0
                 self.b=0
                 self.ventanaLimites(display)
             else:
-                if 'y' in display.get():
+                if 'x' in display.get() and 'y' in display.get():
                     self.dxdzdy(display)
-                else:
+                elif 'x' in display.get() and 'y' not in display.get():
+                    self.diferencial='x'
+                    fc.convertir(display,'A', self.diferencial,self.a,self.b)
+                elif 'y' in display.get() and 'x' not in display.get():
+                    self.diferencial='y'
                     fc.convertir(display,'A', self.diferencial,self.a,self.b)
         elif(textoFuncion=="Agregar"):
             if self.filas<4:
@@ -83,9 +88,16 @@ class Tablero:
             if self.a_L[0].get()!="" or self.b_L[0].get()!="":
                 self.a=self.a_L[0].get()
                 self.b=self.b_L[0].get()
-            self.integrar=False
             self.ventana_L.destroy()
-            fc.convertir(display,'A', self.diferencial,self.a,self.b)
+            if 'x' in display.get() and 'y' in display.get():
+                    self.dxdzdy(display)
+            elif 'x' in display.get() and 'y' not in display.get():
+                self.diferencial='x'
+                fc.convertir(display,'A', self.diferencial,self.a,self.b)
+            elif 'y' in display.get() and 'x' not in display.get():
+                self.diferencial='y'
+                fc.convertir(display,'A', self.diferencial,self.a,self.b)
+            self.integrar=False
         elif(textoFuncion=='Aceptar_D'):
             self.diferencial=self.D[0].get()
             self.ventana_D.destroy()
