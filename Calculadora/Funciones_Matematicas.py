@@ -58,7 +58,6 @@ def fx991(texto, sim, a, b):
             funcion = "derivar"
         elif(texto[i] =="∫"):
             funcion = "integrar"
-            const = True
         #LUEGO SE OPERA LO SEGÚN LA FUNCIÓN
         if(funcion == "derivar"):
             posicion = parentesisInterno(new)
@@ -68,12 +67,13 @@ def fx991(texto, sim, a, b):
         if(funcion == "integrar"):
             posicion = parentesisInterno(new)
             subtexto = new[posicion[0]:posicion[1]+1]
-            if(a != b):
+            if(a != 0 and b != 0):
                 new = new.replace("∫"+subtexto, str(smp.integrate(subtexto,(x,a,b))))
             else:
                 new = new.replace("∫"+subtexto, str(smp.integrate(subtexto,x)))
+                const = True
         
-    if(const and a == b):
+    if(const):
         return(smp.simplify(new) + C)
     else:                
         return(smp.simplify(new))
