@@ -8,6 +8,7 @@ class Tablero:
         self.ventana.iconbitmap("Icono.ico")
         self.ventana.config(bg="black")
         self.ventana.resizable(0,0)
+        #self.ventana.bind("<Return>", lambda _:  self.multi())
 
         self.fuente="Arial"
         self.color="#12ED3E"
@@ -21,7 +22,7 @@ class Tablero:
         
         self.notebook=ttk.Notebook(self.ventana)
         self.notebook.pack(fill='both', expand='yes')
-
+        self.misDisplays=[]
         self.filas=2
         self.columnas=3
         self.entradasMatriz=[]
@@ -30,6 +31,10 @@ class Tablero:
         self.a=0
         self.b=0
         self.integrar=False
+        self.modo="Basico"
+        self.ventana.bind("<Return>", lambda _:  self.igual())
+        self.ventana.bind("*", lambda _:  self.multi())
+        self.ventana.bind("<BackSpace>", lambda _:  self.borrar())
 
     def misFrames(self, textoMenu):
         self.tablero=tk.Frame(self.notebook, bg="black")
@@ -39,6 +44,7 @@ class Tablero:
 
     def entrada(self,tablero,ancho,i,j,ncolumnas):
         self.textoDisplay=tk.StringVar()
+        self.misDisplays.append(self.textoDisplay)
         self.display=tk.Entry(tablero, highlightthickness=1, textvariable=self.textoDisplay, width=ancho)
         self.display.grid(row=i, column=j, padx=10, pady=10, columnspan=ncolumnas)
         self.display.config(bg="black", fg=self.color, highlightbackground = self.color,highlightcolor= "white",font=(self.fuente,30), justify="right")
@@ -144,3 +150,28 @@ class Tablero:
         self.textos(1,1,self.tablero_D,"Ingrese diferencial: ")
         self.D=self.entrada(self.tablero_D,4,1,2,1)
         self.Botones(3,1,"Aceptar", "Aceptar_D", 10, 1,self.tablero_D, display)
+
+    def igual(self):
+        selected_tab = self.notebook.select()
+        print(self.notebook.index(selected_tab))
+
+        if self.notebook.index(selected_tab)==0:
+            self.funcionBoton("OperarBasico",self.misDisplays[0])
+        elif self.notebook.index(selected_tab)==1:
+            self.funcionBoton("OperarAvanzado",self.misDisplays[1])
+    def multi(self):
+        selected_tab = self.notebook.select()
+        print(self.notebook.index(selected_tab))
+
+        if self.notebook.index(selected_tab)==0:
+            self.funcionBoton("·",self.misDisplays[0])
+        elif self.notebook.index(selected_tab)==1:
+            self.funcionBoton("·",self.misDisplays[1])
+    def borrar(self):
+        selected_tab = self.notebook.select()
+        print(self.notebook.index(selected_tab))
+
+        if self.notebook.index(selected_tab)==0:
+            self.funcionBoton("←",self.misDisplays[0])
+        elif self.notebook.index(selected_tab)==1:
+            self.funcionBoton("←",self.misDisplays[1])
