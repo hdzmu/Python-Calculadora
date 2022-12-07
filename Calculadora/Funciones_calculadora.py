@@ -35,6 +35,11 @@ def lenguajeUsuario(funcion):
 
 def operarBasico(display, funcion):
     funcion = funcion.replace("π","*"+str(np.pi))
+    if "ln" in funcion:
+        funcion = funcion.replace("ln","np.log")
+    elif "log" in funcion:
+        funcion = funcion.replace("log","np.log10")
+    funcion = funcion.replace("℮ˆ","np.exp")
     funcion=lenguajeCodigo(funcion)
     funcion=(eval(funcion))
     funcion=lenguajeUsuario(str(funcion))
@@ -73,6 +78,8 @@ def convertir(display, tipoOperacion, diferencial,a,b):
     funcion=display.get()
     new=""
     salto=0
+    ultimoperador=0
+    factorial=""
     for i in range(0,len(funcion),1):
         if(salto==0):
             if(funcion[i]=='√'):
@@ -82,7 +89,13 @@ def convertir(display, tipoOperacion, diferencial,a,b):
                 if(funcion[i]+funcion[i+1]+funcion[i+2]=="sen" or funcion[i]+funcion[i+1]+funcion[i+2]=="cos" or  funcion[i]+funcion[i+1]+funcion[i+2]=="tan"):
                     new+="math."+funcion[i]+funcion[i+1]+funcion[i+2]
                     salto=2
+            elif(funcion[i]=='!'):
+                factorial=funcion[ultimoperador:i]
+                new=new.replace(funcion[ultimoperador:i],"")
+                new+="math.factorial("+factorial+")"
             else:
+                if(funcion[i]=='(' or funcion[i]=='+' or funcion[i]=='-' or funcion[i]=='·' or funcion[i]=='÷'):
+                    ultimoperador=i+1
                 new+=funcion[i]
         else:
             salto-=1

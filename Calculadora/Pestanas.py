@@ -2,8 +2,8 @@ from CalculadoraPOO import *
 def pestanaBasica(ventana):
     tableroBasico=ventana.misFrames("Basico")
     displayBasico=ventana.entrada(tableroBasico,25,1,1,6)
-    botones=[['7','8','9','←','x²','xʸ'],['4','5','6','√','log','÷'],['1','2','3','ₓ','+','-'],['0','.','π','ln','e','n!'],['(',')','=','sen','cos','tan']]
-    textoBotones=[['7','8','9','←','²','ˆ'],['4','5','6','√(','log(','÷'],['1','2','3','·','+','-'],['0','.','π','ln(','e','!'],['(',')','OperarBasico','sen(','cos(','tan(']]
+    botones=[['7','8','9','←','x²','xʸ'],['4','5','6','√','log','÷'],['1','2','3','ₓ','+','-'],['0','.','π','ln','℮','n!'],['(',')','=','sen','cos','tan']]
+    textoBotones=[['7','8','9','←','²','ˆ'],['4','5','6','√(','log(','÷'],['1','2','3','·','+','-'],['0','.','π','ln(','℮ˆ(','!'],['(',')','OperarBasico','sen(','cos(','tan(']]
     for i in range(5):
         for j in range(6):
             if(j<3):
