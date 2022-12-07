@@ -40,6 +40,7 @@ def operarBasico(display, funcion):
     elif "log" in funcion:
         funcion = funcion.replace("log","np.log10")
     funcion = funcion.replace("℮ˆ","np.exp")
+    funcion = funcion.replace("√","np.sqrt")
     funcion=lenguajeCodigo(funcion)
     funcion=(eval(funcion))
     funcion=lenguajeUsuario(str(funcion))
@@ -55,43 +56,24 @@ def operarAvanzado(display, funcion, diferencial,a,b):
     except:
         display.set("Syntax Error")
 
-
-def operacionEspecial(funcion,operacion):
-    copiar=False
-    new=""
-    for i in funcion:
-        if(i==operacion):
-            copiar=True
-            continue
-        elif(i==')'):
-            copiar=False
-            new+=i
-            break
-        if(copiar==True):
-            new+=i
-    
-    if(operacion =='√'):
-        new+="**(1/2)"
-    return new
-
 def convertir(display, tipoOperacion, diferencial,a,b):
     funcion=display.get()
     new=""
     salto=0
     ultimoperador=0
     factorial=""
+    fac=""
     for i in range(0,len(funcion),1):
         if(salto==0):
-            if(funcion[i]=='√'):
-                new+=operacionEspecial(funcion,'√')
-                salto=len(operacionEspecial(funcion,'√'))
-            elif funcion[i]=='s' or funcion[i]=='c' or  funcion[i]=='t':
+            if funcion[i]=='s' or funcion[i]=='c' or  funcion[i]=='t':
                 if(funcion[i]+funcion[i+1]+funcion[i+2]=="sen" or funcion[i]+funcion[i+1]+funcion[i+2]=="cos" or  funcion[i]+funcion[i+1]+funcion[i+2]=="tan"):
                     new+="math."+funcion[i]+funcion[i+1]+funcion[i+2]
                     salto=2
             elif(funcion[i]=='!'):
+                new+=funcion[i]
                 factorial=funcion[ultimoperador:i]
-                new=new.replace(funcion[ultimoperador:i],"")
+                fac=funcion[ultimoperador:i+1]
+                new=new.replace(fac,"")
                 new+="math.factorial("+factorial+")"
             else:
                 if(funcion[i]=='(' or funcion[i]=='+' or funcion[i]=='-' or funcion[i]=='·' or funcion[i]=='÷'):
