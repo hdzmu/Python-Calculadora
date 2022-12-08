@@ -62,6 +62,7 @@ def operarAvanzado(display, funcion, diferencial,a,b):
     try:
         funcion = funcion.replace("π","pi")
         funcion = lenguajeCodigo(funcion)
+        funcion = raizExacta(funcion)
         funcion = fm.fx991(funcion,diferencial, a, b)
         funcion = lenguajeUsuario(str(funcion))        
         display.set(funcion)
@@ -148,3 +149,18 @@ def resolverMatriz(matriz,filas,columnas,ent):
             ent.set(e)
         else:
             ent.set("Error Fatal")
+
+def raizExacta(funcion):
+    exponenteDecimal=""
+    copiar=False
+    for j in range(0,len(funcion),1):
+        if(funcion[j-2]+funcion[j-1]+funcion[j]=="**("):
+            copiar=True
+            continue
+        if(copiar==True):
+            if(funcion[j]!=")"):
+                exponenteDecimal+=funcion[j]
+            else:
+                break
+    funcion = funcion.replace(exponenteDecimal,str(frac(exponenteDecimal)))
+    return funcion
