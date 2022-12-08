@@ -71,11 +71,10 @@ def fx991(texto, sim, a, b):
             else:
                 new = new.replace("∫"+subtexto, str(smp.integrate(subtexto,x)))
                 const = True
-        
     if(const):
         return(smp.simplify(new) + C)
     else:                
         return(smp.simplify(new))
 
     
-print(fx991("1+1",'x','1','1'))
+#print(fx991("1+1",'x','1','1'))
