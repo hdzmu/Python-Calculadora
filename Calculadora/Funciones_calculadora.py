@@ -19,8 +19,6 @@ def lenguajeCodigo(funcion):
     funcion = funcion.replace("sen","sin") 
     funcion = funcion.replace("·","*")
     funcion = funcion.replace("÷","/")
- 
-
     return funcion
     
 
@@ -34,6 +32,10 @@ def lenguajeUsuario(funcion):
     funcion = funcion.replace("pi","π")
     funcion = funcion.replace("/","÷")
     funcion = funcion.replace("I","i")
+    funcion = funcion.replace("E","e")
+    funcion = funcion.replace("nan","Complejo")
+    funcion = funcion.replace("sqrt","√")
+    funcion = funcion.replace("zoo","infinito")
     return funcion
 
 def operarBasico(display, funcion):
@@ -45,20 +47,27 @@ def operarBasico(display, funcion):
     funcion = funcion.replace("℮ˆ","np.exp")
     funcion = funcion.replace("√","np.sqrt")
     funcion=lenguajeCodigo(funcion)
-    funcion=(eval(funcion))
-    funcion=lenguajeUsuario(str(funcion))
-    display.set(funcion)
+    try: 
+        funcion=(eval(funcion))
+        funcion=lenguajeUsuario(str(funcion))
+        display.set(funcion)
+    except Exception as e:
+        if (str(e) == "division by zero"):
+            display.set("División entre cero")
+        else:
+            display.set("Error de Sintaxis")
+        
     
 def operarAvanzado(display, funcion, diferencial,a,b):
     try:
         funcion = funcion.replace("π","pi")
         funcion = lenguajeCodigo(funcion)
-        funcion = raizExacta(funcion)
         funcion = fm.fx991(funcion,diferencial, a, b)
         funcion = lenguajeUsuario(str(funcion))        
         display.set(funcion)
-    except:
-        display.set("Syntax Error")
+    except Exception as e:
+        display.set("Error de Sintaxis")
+        print(e)
 
 def convertir(display, tipoOperacion, diferencial,a,b):
     funcion=display.get()
@@ -114,37 +123,28 @@ def resolverMatriz(matriz,filas,columnas,ent):
     mt=[]
     z=[]
     b=[]
-    for i in range(0,filas,1):
-        for j in range(0,columnas,1):
-            if j+1!=columnas:
-                fila.append((matriz[i][j][0]).get())
-            else:
-                z.append((matriz[i][j][0]).get())
-        mt.append(fila)
-        fila=[]
-        b.append(z)
-        z=[]
-    mt=matrix(mt)
-    b=matrix(b)
-    sol=linalg.solve(mt,b)
-    salida=""
-    variables=["x","y","z","w"]
-    for i in range(0,len(sol),1):
-        sol[i]=round(float(sol[i]),2)
-        salida=" "+variables[i]+" = "+str(sol[i])
-        ent.set(ent.get()+salida)
-
-def raizExacta(funcion):
-    exponenteDecimal=""
-    copiar=False
-    for j in range(0,len(funcion),1):
-        if(funcion[j-2]+funcion[j-1]+funcion[j]=="**("):
-            copiar=True
-            continue
-        if(copiar==True):
-            if(funcion[j]!=")"):
-                exponenteDecimal+=funcion[j]
-            else:
-                break
-    funcion = funcion.replace(exponenteDecimal,str(frac(exponenteDecimal)))
-    return funcion
+    try:
+        for i in range(0,filas,1):
+            for j in range(0,columnas,1):
+                if j+1!=columnas:
+                    fila.append((matriz[i][j][0]).get())
+                else:
+                    z.append((matriz[i][j][0]).get())
+            mt.append(fila)
+            fila=[]
+            b.append(z)
+            z=[]
+        mt=matrix(mt)
+        b=matrix(b)
+        sol=linalg.solve(mt,b)
+        salida=""
+        variables=["x","y","z","w"]
+        for i in range(0,len(sol),1):
+            sol[i]=round(float(sol[i]),2)
+            salida=" "+variables[i]+" = "+str(sol[i])
+            ent.set(ent.get()+salida)
+    except Exception as e:
+        if(str(e) == "La matrix es singular"):
+            ent.set(e)
+        else:
+            ent.set("Error Fatal")
