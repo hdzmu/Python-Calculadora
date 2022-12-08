@@ -78,4 +78,4 @@ def fx991(texto, sim, a, b):
         return(smp.simplify(new))
 
     
-#print(fx991("(∫(3*x))",'x','1','1'))
+print(fx991("1+1",'x','1','1'))

@@ -78,6 +78,8 @@ class Tablero:
                 elif 'y' in display.get() and 'x' not in display.get():
                     self.diferencial='y'
                     fc.convertir(display,'A', self.diferencial,self.a,self.b)
+                elif 'x' and 'y' not in display.get():
+                    fc.convertir(display,'A', self.diferencial,self.a,self.b)
         elif(textoFuncion=="Agregar"):
             if self.filas<4:
                 self.filas+=1
