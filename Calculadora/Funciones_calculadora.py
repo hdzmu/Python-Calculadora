@@ -77,27 +77,29 @@ def convertir(display, tipoOperacion, diferencial,a,b):
     ultimoperador=0
     factorial=""
     fac=""
-    for i in range(0,len(funcion),1):
-        if(salto==0):
-            if funcion[i]=='s' or funcion[i]=='c' or  funcion[i]=='t':
-                if(funcion[i]+funcion[i+1]+funcion[i+2]=="sen" or funcion[i]+funcion[i+1]+funcion[i+2]=="cos" or  funcion[i]+funcion[i+1]+funcion[i+2]=="tan"):
-                    new+="math."+funcion[i]+funcion[i+1]+funcion[i+2]
-                    salto=2
-            elif(funcion[i]=='!'):
-                new+=funcion[i]
-                factorial=funcion[ultimoperador:i]
-                fac=funcion[ultimoperador:i+1]
-                new=new.replace(fac,"")
-                new+="math.factorial("+factorial+")"
+    if tipoOperacion=='B':
+        for i in range(0,len(funcion),1):
+            if(salto==0):
+                if funcion[i]=='s' or funcion[i]=='c' or  funcion[i]=='t':
+                    if(funcion[i]+funcion[i+1]+funcion[i+2]=="sen" or funcion[i]+funcion[i+1]+funcion[i+2]=="cos" or  funcion[i]+funcion[i+1]+funcion[i+2]=="tan"):
+                        new+="math."+funcion[i]+funcion[i+1]+funcion[i+2]
+                        salto=2
+                elif(funcion[i]=='!'):
+                    new+=funcion[i]
+                    factorial=funcion[ultimoperador:i]
+                    fac=funcion[ultimoperador:i+1]
+                    new=new.replace(fac,"")
+                    new+="math.factorial("+factorial+")"
+                else:
+                    if(funcion[i]=='(' or funcion[i]=='+' or funcion[i]=='-' or funcion[i]=='·' or funcion[i]=='÷'):
+                        ultimoperador=i+1
+                    new+=funcion[i]
             else:
-                if(funcion[i]=='(' or funcion[i]=='+' or funcion[i]=='-' or funcion[i]=='·' or funcion[i]=='÷'):
-                    ultimoperador=i+1
-                new+=funcion[i]
-        else:
-            salto-=1
+                salto-=1
     if tipoOperacion=='B':
         operarBasico(display,new)
     elif tipoOperacion=='A':
+        new=funcion
         operarAvanzado(display,new, diferencial,a,b)
 
 def aumentarMatriz(ventana,matriz,tablero,filas,columnas):
@@ -163,5 +165,6 @@ def raizExacta(funcion):
             else:
                 break
     if exponenteDecimal != "":
-        funcion = funcion.replace(exponenteDecimal,str(frac(exponenteDecimal)))
+        if '.' in exponenteDecimal:
+            funcion = funcion.replace(exponenteDecimal,str(frac(exponenteDecimal)))
     return funcion
