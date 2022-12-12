@@ -39,7 +39,8 @@ def lenguajeUsuario(funcion):
     return funcion
 
 def operarBasico(display, funcion):
-    funcion = funcion.replace("π","*"+str(np.pi))
+    funcion = funcion.replace("sen","sin")
+    funcion = funcion.replace("π",str(np.pi))
     if "ln" in funcion:
         funcion = funcion.replace("ln","np.log")
     elif "log" in funcion:
@@ -50,6 +51,8 @@ def operarBasico(display, funcion):
     try: 
         funcion=(eval(funcion))
         funcion=lenguajeUsuario(str(funcion))
+        if 'e' in funcion:
+            funcion=eval("round("+funcion+")")
         display.set(funcion)
     except Exception as e:
         if (str(e) == "division by zero"):

@@ -1,6 +1,7 @@
 import sympy as smp
 from sympy import *
 import numpy as np 
+import math
 
 def derivarPolinomios(texto, sim, orden):
     x = smp.symbols(sim)
@@ -78,5 +79,5 @@ def fx991(texto, sim, a, b):
     else:                
         return(smp.simplify(new))
 
-    
+print(round(math.sin(math.pi),2))
 #print(fx991("(2)**(1/2)",'x','1','1'))
