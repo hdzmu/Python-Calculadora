@@ -162,5 +162,6 @@ def raizExacta(funcion):
                 exponenteDecimal+=funcion[j]
             else:
                 break
-    funcion = funcion.replace(exponenteDecimal,str(frac(exponenteDecimal)))
+    if exponenteDecimal != "":
+        funcion = funcion.replace(exponenteDecimal,str(frac(exponenteDecimal)))
     return funcion
